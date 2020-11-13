@@ -1,0 +1,30 @@
+MANAGER:
+    NR_OF_PARALLEL_WORKERS: -1  # -1 means half of the available processors will be used
+    SITE_VERTICES_FILE:
+        PATH: "../../example_project_files/SiteVertices.csv"
+        SEPARATOR: ","
+    BLDG_FID_FILE:
+        PATH: "BuildingInformation_withArchetype.csv"
+        SEPARATOR: ","
+    BLDG_AGE_FILE:
+        PATH: "BuildingInformation_withArchetype.csv"
+        SEPARATOR: ","
+    BLDG_TYPE_PER_BLDG_FILE:
+        PATH: "BuildingInformation_withArchetype.csv"
+        SEPARATOR: ","
+    GLAZING_RATIO_PER_BLDG_FILE:
+        ACTIVE: False
+        PATH: "BuildingInformation_withArchetype.csv"
+        SEPARATOR: ","
+    DO_CALC_OP_EMISSIONS_AND_COSTS: True
+    BLDG_INSTALLATION_FILE:
+        PATH: "BuildingInformation_withArchetype"
+        SEPARATOR: ","
+    SINGLE_SITE:
+        ACTIVE: True
+        WEATHER_FILE: "../../example_project_files/Zurich_2015.epw"
+
+
+GRAPHDB_ACCESS:
+    # you must specify the class here, thus xxx.xxx; only xxx would point to the module an cesar-p-core would throw an exception when trying to instantiate...
+    ARCHETYPE_CONSTRUCTION_FACTORY_CLASS: BuildingSpecificArchetypConstructionFactory.BuildingSpecificArchetypConstructionFactory

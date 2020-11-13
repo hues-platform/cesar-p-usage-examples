@@ -1,0 +1,2 @@
+MANAGER:
+    BUILDING_OPERATION_FACTORY_CLASS: "SIABasedMixedOperationFactory.SIABasedMixedOperationFactory"

@@ -1,0 +1,5 @@
+MANAGER:
+    SINGLE_SITE:
+        WEATHER_FILE: "../../example_project_files/Zurich_2020.epw"
+SITE:
+    SIMULATION_YEAR: 2020  # has influence on applied cost and emission factors

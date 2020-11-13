@@ -1,0 +1,42 @@
+MANAGER:
+    NR_OF_PARALLEL_WORKERS: 2  # -1 means half of the available processors will be used
+    SITE_VERTICES_FILE:
+        PATH: "../example_project_files/SiteVertices.csv"
+        SEPARATOR: ","
+    BLDG_FID_FILE:
+        PATH: "../example_project_files/BuildingInformation.csv"
+        SEPARATOR: ","
+    BLDG_AGE_FILE:
+        PATH: "../example_project_files/BuildingInformation.csv"
+        SEPARATOR: ","
+    BLDG_TYPE_PER_BLDG_FILE:
+        PATH: "../example_project_files/BuildingInformation.csv"
+        SEPARATOR: ","
+    GLAZING_RATIO_PER_BLDG_FILE:
+        ACTIVE: False
+        PATH: "../example_project_files/BuildingInformation.csv"
+        SEPARATOR: ","
+    DO_CALC_OP_EMISSIONS_AND_COSTS: True
+    BLDG_INSTALLATION_FILE:
+        PATH: "../example_project_files/BuildingInformation.csv"
+        SEPARATOR: ","
+    SINGLE_SITE:
+        ACTIVE: True
+        WEATHER_FILE: "../example_project_files/Zurich_2015.epw"
+SITE:
+    SIMULATION_YEAR: 2015
+ENERGY_STRATEGY:
+  ENERGY_STRATEGY_SELECTION: WWB # WWB - Business as Usual or NEP - New Energy Policy
+
+
+# You can add here custom configuration for the cesar packages. This will overwrite package default config.
+# For configuration options see default_config.yml in the packages/folders, e.g. geometry or construction
+
+EPLUS_ADAPTER:
+    EPLUS_RUN_VERBOSE: False
+
+GRAPHDB_ACCESS:
+  LOCAL:
+    ACTIVE: True
+  REMOTE:
+    ACTIVE: False
