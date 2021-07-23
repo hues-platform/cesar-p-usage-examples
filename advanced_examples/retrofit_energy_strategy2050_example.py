@@ -19,6 +19,13 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+Example showing the use of :py:class:`cesarp.retrofit.energy_perspective_2050.EnergyPerspective2050RetrofitManager`.
+Please have a look on the class description for more details.
+
+This retrofit strategy is rather complicated, for a simpler starting point or starting point for a 
+custom retrofit implementation check out the retrofit_simple_example.py
+"""
 import os
 import logging.config
 from pathlib import Path
@@ -32,11 +39,12 @@ def __abs_path(rel_path: str) -> Path:
 
 if __name__ == "__main__":
     ureg = cesarp.common.init_unit_registry()
-    logging.config.fileConfig("logging.conf")
+    logging.config.fileConfig(__abs_path("logging.conf"))
 
     cfg_path = __abs_path("main_config.yml")
     output_path = __abs_path("results/energystrategy2050_retrofit_example")
     ressources_path = __abs_path("../example_project_files")
+    # define the retrofit periods along with the weather file to use
     weather_mapping = {
         2015: str(ressources_path / Path("Zurich_2015.epw")),
         2020: str(ressources_path / Path("Zurich_2020.epw")),

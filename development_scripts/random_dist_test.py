@@ -19,6 +19,10 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+
+"""
+Little test to check whether drawing random numbers one-by-one or all at once has an influence on their distribution.
+"""
 import numpy
 import pandas
 

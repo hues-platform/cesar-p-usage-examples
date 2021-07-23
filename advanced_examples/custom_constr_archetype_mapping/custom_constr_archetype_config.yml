@@ -18,7 +18,7 @@ MANAGER:
         SEPARATOR: ","
     DO_CALC_OP_EMISSIONS_AND_COSTS: True
     BLDG_INSTALLATION_FILE:
-        PATH: "BuildingInformation_withArchetype"
+        PATH: "BuildingInformation_withArchetype.csv"
         SEPARATOR: ","
     SINGLE_SITE:
         ACTIVE: True

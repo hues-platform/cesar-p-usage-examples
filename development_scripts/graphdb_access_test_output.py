@@ -19,6 +19,15 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+This script was used while developing the graphdb_access package and might
+be useful to see how you can work with the graphdb_access package or 
+if you want to test accessing new data.
+
+To get properties of the archetypes, there is also the pre_or_postprocessing_scripts/collect_archetype_infos.py
+which is actually a bit more tidy.
+"""
+
 from cesarp.graphdb_access.BldgElementConstructionReader import BldgElementConstructionReader
 from cesarp.graphdb_access.GraphDBReader import GraphDBReader
 from cesarp.graphdb_access.GraphDBArchetypicalConstructionFactory import GraphDBArchetypicalConstructionFactory

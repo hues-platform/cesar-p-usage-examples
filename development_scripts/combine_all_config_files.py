@@ -21,10 +21,11 @@
 #
 from typing import Dict, Any
 from cesarp.common import config_loader
+from shutil import copyfileobj
 
 
 from cesarp.construction import _default_config_file as cstr_cfg
-from cesarp.emissons_cost import _default_config_file as e_c_cfg
+# emission_and_cost has no config
 from cesarp.energy_strategy import _default_config_file as es_cfg
 from cesarp.eplus_adapter import _default_config_file as eplus_cfg
 from cesarp.geometry import _default_config_file as geom_cfg
@@ -40,31 +41,35 @@ from cesarp.SIA2024 import _default_config_file as sia_cfg
 from cesarp.site import _default_config_file as site_cfg
 from cesarp.weather.swiss_communities import _default_config_file as sc_weather_cfg
 
+"""
+Does create a big YAML file with all the configuration parameters from  cesar-p.
+All comments are lost, as we parse the files and re-write after merging.
+"""
 
 import yaml
+from typing import List
 
+ALL_CFG_FILES = [
+    cstr_cfg,
+    es_cfg,
+    geom_cfg,
+    graph_cfg,
+    idf_cfg,
+    mgr_cfg,
+    op_cfg,
+    ret_cfg,
+    sia_cfg,
+    site_cfg,
+    sc_weather_cfg,
+    eplus_cfg,
+    op_fixed_cfg,
+    ret_emb_cfg,
+    ret_ep2050_cfg,
+]
 
-def get_all_config(custom_config: Dict[str, Any] = {}):
+def combine_configs_without_comments():
     all_config_dict = {}
-    all_cfg_files = [
-        cstr_cfg,
-        e_c_cfg,
-        es_cfg,
-        geom_cfg,
-        graph_cfg,
-        idf_cfg,
-        mgr_cfg,
-        op_cfg,
-        ret_cfg,
-        sia_cfg,
-        site_cfg,
-        sc_weather_cfg,
-        eplus_cfg,
-        op_fixed_cfg,
-        ret_emb_cfg,
-        ret_ep2050_cfg,
-    ]
-    for cfg_file in all_cfg_files:
+    for cfg_file in ALL_CFG_FILES:
         cfg_entries = config_loader.load_config_full(cfg_file, ignore_metadata=False)
         all_config_dict = config_loader.merge_config_recursive(all_config_dict, cfg_entries)
     all_config_file = "all_cesarp_config.yml"
@@ -73,5 +78,16 @@ def get_all_config(custom_config: Dict[str, Any] = {}):
     print(f"saved combined configuration to {all_config_file}")
 
 
+def combine_configs_to_one_file(files_to_append: List[str], main_file: str):
+    file_mod = "wb"
+    with open(main_file, file_mod) as file_to_append_to:
+        for filename_to_be_appended in files_to_append:
+            with open(filename_to_be_appended, "rb") as to_be_appended:
+                copyfileobj(to_be_appended, file_to_append_to, 1024)
+
+
 if __name__ == "__main__":
-    get_all_config()
+    result_config_file = "cesar-p-config-overview.yaml"
+    combine_configs_to_one_file(ALL_CFG_FILES, result_config_file)
+    print(f"Combined configuration has been written to {result_config_file}")
+    print("please do a bit manual postprocessing: remove copyright-blocks (search and replace); combine all blocks for RETROFIT and OPERATION into one block.")

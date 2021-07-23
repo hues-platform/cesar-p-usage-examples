@@ -19,6 +19,11 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+Querying the information for the GraphDB was not performant.
+This script uses the python profiling to figure out which parts did make up most of the time.
+Based on this, the caching mechanism for materials was introduced in *cesarp.graphdb_access.BldgElementConstructionReader*
+"""
 import logging
 import cProfile
 import pstats

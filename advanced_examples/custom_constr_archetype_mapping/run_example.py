@@ -18,6 +18,17 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+Example showing how you can control the mapping of constructional archetypes to your building using 
+a file defining the archetype to use for each building.
+
+If you just want to use other archetypes than the default ones and map them by construction year of the building you can 
+do so by adapting the archetype URIs in the configuration for package cesarp.graphdb_access.
+
+Note that this is example only is applicable if you use the construction package based on the GraphDB (graphdb_access) 
+and not when using the IDF based oen (idf_constructions_db_access).
+"""
+
 import logging.config
 import logging
 import os
@@ -40,6 +51,7 @@ if __name__ == "__main__":
     # make sure the BuildingSpecificArechtypConstrctionFactory can be found
     sys.path.append(os.path.dirname(__file__))
 
+    # the configuration points to the custom constructional archetype factory
     main_config_path = __abs_path("custom_constr_archetype_config.yml")
     output_dir = __abs_path("../results/custom_constr_archetype")
     shutil.rmtree(output_dir, ignore_errors=True)

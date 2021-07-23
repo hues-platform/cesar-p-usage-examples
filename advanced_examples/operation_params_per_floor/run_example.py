@@ -18,6 +18,10 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+Example using a custom factory for building operation.
+For more details check out the description in the :py:class:`SIABasedMixedOperationFactory`
+"""
 import logging.config
 import logging
 import os
@@ -41,7 +45,10 @@ if __name__ == "__main__":
     sys.path.append(os.path.dirname(__file__))
 
     main_cfg_path = __abs_path("../main_config.yml")
-    op_param_cfg_path = __abs_path("additional_op_params_config.yml")
+    # the additional_op_params_config.yml points to our custom factory    
+    op_param_cfg_path = __abs_path("additional_op_params_config.yml") 
+    # you could also add this configuration lines to your main config, here we just did want to reuse the main_config 
+    # and thus parse and merge those two custom configs before passing them to the Simulation manager     
     main_config = cesarp.common.config_loader.merge_config_recursive(cesarp.common.load_config_full(main_cfg_path), cesarp.common.load_config_full(op_param_cfg_path))
     output_dir = __abs_path("../results/op_params_per_floor")
     shutil.rmtree(output_dir, ignore_errors=True)
@@ -53,4 +60,3 @@ if __name__ == "__main__":
     print("====================")
     print(f"check out results in {output_dir}")
     print("for a quick check if profile assignment worked as expected, you could have a look at the generated IDF files.")
-    print("If there are errors, make sure you did run the pre_generate_sia_params.py")

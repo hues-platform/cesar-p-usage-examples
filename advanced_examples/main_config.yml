@@ -1,5 +1,7 @@
 MANAGER:
-    NR_OF_PARALLEL_WORKERS: 2  # -1 means half of the available processors will be used
+    # how many worker-threads shall be used, -1 means half of the available processors will be used (applicable when using one of the built-in main classes, e.g. SimulationManager, ProjectManager)
+    NR_OF_PARALLEL_WORKERS: 2
+    # file with all site vertices
     SITE_VERTICES_FILE:
         PATH: "../example_project_files/SiteVertices.csv"
         SEPARATOR: ","
@@ -23,20 +25,20 @@ MANAGER:
     SINGLE_SITE:
         ACTIVE: True
         WEATHER_FILE: "../example_project_files/Zurich_2015.epw"
+
+
+# You can add here custom configuration for the cesar-p packages. This will overwrite package default config.
+# For configuration options see the configuration overview cesar-p-config_overview.yaml in the root of cesar-p-core
+# or see Configuration overview in the Usage section of the documentation
+
 SITE:
-    SIMULATION_YEAR: 2015
+  SIMULATION_YEAR: 2015  # relevant for operational costs and emissions
 ENERGY_STRATEGY:
-  ENERGY_STRATEGY_SELECTION: WWB # WWB - Business as Usual or NEP - New Energy Policy
-
-
-# You can add here custom configuration for the cesar packages. This will overwrite package default config.
-# For configuration options see default_config.yml in the packages/folders, e.g. geometry or construction
-
-EPLUS_ADAPTER:
-    EPLUS_RUN_VERBOSE: False
+  ENERGY_STRATEGY_SELECTION: WWB  # WWB - Business as Usual or NEP - New Energy Policy
 
 GRAPHDB_ACCESS:
   LOCAL:
     ACTIVE: True
-  REMOTE:
-    ACTIVE: False
+  REMOTE:  # if you activate remote graphdb access, make sure to configure it according to installation guide in the README
+    ACTIVE: False  
+    SPARQL_ENDPOINT: "YOUR_GRAPHDB_ENDPOINT"

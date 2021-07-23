@@ -43,14 +43,36 @@ class SIABasedMixedOperationFactory:
     """
 
     def __init__(self, passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
-        params_factory = (
-            NullParameterFactory()
-        )  # we use the pre-generated sia profiles included in cesar-p-core, thus no need to link to SIA data (which is not included in cesar-p-core open source package
+        """
+        :param passive_cooling_op_fact: instance of passive cooling operation factory, e.g. :py:class:`cesarp.operation.PassiveCoolingOperationFactory`
+        :type passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol
+        :param ureg: application unit registry instance
+        :type ureg: pint.UnitRegistry
+        :param custom_config: custom configuration entries, defaults to {}
+        :type custom_config: Dict[str, Any], optional
+        """
+        # we use the pre-generated sia profiles included in cesar-p-core, thus no need to link create new parameter sets 
+        # (SIA data which would be needed for this is not included in cesar-p-core open source package)
+        params_factory = NullParameterFactory()
         self.params_manager = SIA2024ParamsManager(params_factory, ureg, custom_config)
-        self.params_manager.load_param_sets_nominal(list(SIA2024BldgTypeKeys))  # load profiles for all building types, path to load from is configurable, see cesarp.SIA2024
+        self.params_manager.load_param_sets_nominal(list(SIA2024BldgTypeKeys))  # load profiles for all building types, path to load from is configurable, see cesarp.SIA2024 config
         self._passive_cooling_op_fact = passive_cooling_op_fact
 
-    def get_building_operation(self, bldg_fid: int, nr_of_floors: int):
+    def get_building_operation(self, bldg_fid: int, nr_of_floors: int) -> BuildingOperationMapping:
+        """
+        Returns an instance of BuildingOperationMapping for the given building, which then can be attached to the BuildingModel instance of that building.
+        For all buildings the operational parameters are set as:
+
+        * 1st floor SHOP
+        * all other floors MFH (residential multi familiy home)
+
+        :param bldg_fid: building fid for which to create the object
+        :type bldg_fid: int
+        :param nr_of_floors: nr of floors the building has
+        :type nr_of_floors: int
+        :return: initialized building operation mapping object for given building
+        :rtype: BuildingOperationMapping
+        """
         bldg_op_mfh = self.__init_bldg_op(bldg_fid, SIA2024BldgTypeKeys.MFH)
         bldg_op_shop = self.__init_bldg_op(bldg_fid, SIA2024BldgTypeKeys.SHOP)
         bldg_op_mapping = BuildingOperationMapping()

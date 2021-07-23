@@ -1,0 +1,12 @@
+MANAGER:
+    GLAZING_RATIO_PER_BLDG_FILE:
+      ACTIVE: True # if not active glazing ratio from Constructional Archetype (based on age class of building) is used
+      PATH: "lower_glz_ratio.csv"
+      SEPARATOR: ","
+      LABELS:
+        gis_fid: "ORIG_FID"
+        glazing_ratio: "GlazingRatio"
+    SINGLE_SITE:
+        WEATHER_FILE: "../../example_project_files/Zurich_2020.epw"
+SITE:
+    SIMULATION_YEAR: 2020  # has influence on applied cost and emission factors

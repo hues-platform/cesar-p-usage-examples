@@ -18,5 +18,6 @@ MANAGER:
         WEATHER_FILE: "../example_project_files/Zurich_2015.epw"
 
 
-# You can add here custom configuration for the cesar packages. This will overwrite package default config.
-# For configuration options see default_config.yml in the packages/folders, e.g. geometry or construction
+# You can add here custom configuration for the cesar-p packages. This will overwrite package default config.
+# For configuration options see the configuration overview cesar-p-config_overview.yaml in the root of cesar-p-core
+# or see Configuration overview in the Usage section of the documentation

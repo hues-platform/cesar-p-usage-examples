@@ -19,16 +19,23 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+this script converts a IDF file to a 3d geometry you can view e.g. in an online viewer
+useful to check your building footprints are as you expect and to check how cesar-p creates the building geometry incl adjacencies, neighbours and windows
+
+it might be that the process does flip buildings overhead or so, so be careful when using it
+
+run the basic example prior to running this script to have idf files available to convert
+"""
 from geomeppy import IDF  # install geomeppy in your environment with pip install geomeppy
 from pathlib import Path
 import os
 
 if __name__ == "__main__":
-    # this script converts a IDF file to a 3d geometry you can view e.g. in an online viewer
-    # useful to check your building footprints are as you expect and to check how cesar-p creates the building geometry incl adjacencies, neighbours and windows
     IDF.setiddname("C:/EnergyPlusV9-3-0/Energy+.idd")  # make sure to set IDD matching your IDF
-    base = os.path.dirname(__file__) / Path("..") / Path("simple_example") / Path("results") / Path("example") / Path("idfs")  # run the basic example prior to running this script
-    idf = IDF(str(base / Path("fid_1.idf")))
-    dst = str(base / Path("fid_1.obj"))
-    idf.to_obj(fname=dst)
-    print(f"building 3D object has been saved to {dst}. ZIP the .obj an .mtl file and upload to www.creators3d.com/online-viewer to visualize.")
+    base = os.path.dirname(__file__) / Path("..") / Path("simple_example") / Path("results") / Path("example") / Path("idfs") 
+    idf_path = f"{base}/fid_2.idf"
+    dest_path = f"{base}/fid_2.obj"
+    idf = IDF(idf_path)
+    idf.to_obj(fname=dest_path) 
+    print(f"building 3D object has been saved to {dest_path}. ZIP the .obj an .mtl file and upload to www.creators3d.com/online-viewer to visualize.")

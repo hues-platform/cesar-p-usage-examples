@@ -18,12 +18,17 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+Does get some example properties of the building models from a existing project.
+
+Run simple example prior to run this script or adapt pathes to your project.
+"""
+
 import os
 from pathlib import Path
 from cesarp.manager.SimulationManager import SimulationManager
 import cesarp.common
 
-# not, run simple example prior to run this script
 
 base_cesarp_output = os.path.dirname(__file__) / Path("..") / Path("simple_example") / Path("results") / Path("example")  # must contain folder named bldg_containers
 main_cfg_path = os.path.dirname(__file__) / Path("..") / Path("simple_example") / Path("simple_main_config.yml")
