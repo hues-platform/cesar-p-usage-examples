@@ -1,0 +1,2 @@
+EPLUS_ADAPTER:
+    IDF_WRITER_CLASS: "CoSimulationIDFWriter.CoSimulationIDFWriter"

@@ -6,96 +6,53 @@ Collection of scripts to use the cesar-p-core library.
 Different usage scenarios are shown here, but it does not include all possibilities.
 
 The project is NOT intended to be directly used to start your project.
-Copy and paste the scripts you need to your project and adapt to your needs.
-
-Please feel free to add more examples to this project that might be useful to others.
+Copy and paste the scripts you want to use to your project and adapt to your needs.
 
 Project Info
 ============
-- Main contact: Léonie Fierz (leonie.fierz@empa.ch)
+- Main contact: Kristina Orehounig
 - Developers: Léonie Fierz (Urban Energy Systems Lab at Swiss Federal Laboratories for Materials Science and Technology Empa)
 - Programming Language and Version: Python 3.8 
 - Dependencies (see also requirements.txt)
 
   - cesar-p version 2.0.0
-  - geomeppy (for 3D obj generation from idf files)
-- Development dependencies:
+  - geomeppy (for 3D obj generation from idf files, needed for 3dview.py example)
 
-  - flake8
-  - mypy
-  - black
-
-- Documentation: all included in this README and in the comments of the different scripts
-
+- Documentation: all included in this README and in the comments of the different example scripts
 
 Project Status
 ===============
-"Released", examples are OK to be used to start your project.
-No project version tracking is set up.
-There are Tags marking the version compatible with earlier cesar-p-core lib versions in case you need to use an older cesar-p-core version.
 
+There is no versioning for this examples project, but they are ready to be used as a start for your own project based on cesar-p-core.
+There are Tags marking the version compatible with earlier cesar-p-core lib versions in case you need to use an older cesar-p-core version.
 
 Installation & Usage
 =====================
 
-If you alread installed cesar-p according to the installation guide of cesar-p-core project, just do a clone of this 
-repository and use the virtual environment where you installed cesar-p to run the examples as outlined under Usage.
+1. Set up [cesar-p-core library](https://github.com/hues-platform/cesar-p-core) according to the [installation guide](https://cesar-p-core.readthedocs.io/en/latest/readme.html#installation-usage)
 
-.. code-block::
-    
-    git clone https://github.com/hues-platform/cesar-p-usage-examples
+2. Activate the virtual environment you installed cesar-p-core libarary, if you followed the installation instrucctions and you are on Windows do:
 
+    .. code-block::
 
-Otherwise here is the full installation guide:
+      %USERPROFILE%/venv-cesar-p/Scripts/activate
 
-- Open a shell, e.g. git bash or windows command line. Navigate to the folder where you want to have the examples.
-- Clone the project files: 
+3. Open a shell and navigate to the folder you want to have the examples in. 
+
+4. Clone this project to your computer: 
 
   .. code-block::
      
       git clone https://github.com/hues-platform/cesar-p-usage-examples
 
-- Change to the project directory (cd cesar-p-usage-examples) 
-- Download and Install Python in the verison outlined under Project Info from https://www.python.org/downloads/.
-  - If you already have a Python installation, do not tick 'Add Python X.Y to Path' during installation procedure.
-  - Note: using Anaconda is not recommended, but should work
-- Create a new Python virtual environment and activate it, e.g.:
+5. Then to run e.g. the simple example:
 
-    .. code-block::
+  ..  code-block::
 
-        python -m venv venv-cesar-p
-        venv-cesar-p/Scripts/activate
+      cd simple_example
+      python simple_run.py
 
-
-- Install project dependencies, which includes cesar-p-core. 
-  If you did clone the master branch, you might need to get the latest development state of cesar-p by cloning and installing the cesar-p-core master branch.
-  Alternatively checkout the Tag of cesar-p-usage-examples matching your cesar-p version.
-
-    .. code-block::
-
-        pip install -r requirements.txt
-
-
-- For developers - if you want static code checkers: 
-
-    .. code-block::
-
-        pip install flake8, black
-
-
-Usage
------
-
-For the most simple example, run the simple_example.
-
-You can run with the provided example project files from example_project_files folder or you can 
-adapt the simple_example/simple_main_config.yml to point to your project files for site vertices, building information and weather file.
-
-..  code-block::
-
-    cd simple_example
-    python simple_run.py
-
+  You can adapt the simple_example/simple_main_config.yml to point to your project files for site vertices, building information and weather file.
 
 For more options what you can do with the SimulationManager API, e.g. hourly result outputs, check out *advanced_examples/basic_cesar_usage.py*
 
@@ -109,7 +66,6 @@ Scripts overview
 
 For most of the examples in *pre_or_postprocessing_scripts* you need to first run a simulation of the *simple_example* project, see above.
 Navigate to *pre_or_postprocessing_scripts* to run the scripts, as most of them have relative path specifications.
-
 
 A short overview of the examples included:
 
@@ -166,3 +122,11 @@ development_scripts                                 graphdb_access_test_output.p
 development_scripts                                 random_dist_test.py                       Compare one-by-one versus all at onece random number generation       
 =================================================== ========================================= ======================================================================================================
 
+
+Contributing
+============
+
+You are welcome to open issues reporting bugs or creating pull requests with bugfixes or new examples!
+
+Before submitting your contribution as a pull request please check code formatting with *flake8* and 
+proper type hints with *mppy*.

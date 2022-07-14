@@ -30,7 +30,6 @@ from cesarp.energy_strategy import _default_config_file as es_cfg
 from cesarp.eplus_adapter import _default_config_file as eplus_cfg
 from cesarp.geometry import _default_config_file as geom_cfg
 from cesarp.graphdb_access import _default_config_file as graph_cfg
-from cesarp.idf_constructions_db_access import _default_config_file as idf_cfg
 from cesarp.manager import _default_config_file as mgr_cfg
 from cesarp.operation import _default_config_file as op_cfg
 from cesarp.operation.fixed import _default_config_file as op_fixed_cfg
@@ -54,7 +53,6 @@ ALL_CFG_FILES = [
     es_cfg,
     geom_cfg,
     graph_cfg,
-    idf_cfg,
     mgr_cfg,
     op_cfg,
     ret_cfg,
