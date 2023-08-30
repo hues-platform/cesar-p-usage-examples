@@ -33,9 +33,9 @@ import os
 
 if __name__ == "__main__":
     IDF.setiddname("C:/EnergyPlusV9-3-0/Energy+.idd")  # make sure to set IDD matching your IDF
-    base = os.path.dirname(__file__) / Path("..") / Path("simple_example") / Path("results") / Path("example") / Path("idfs") 
+    base = os.path.dirname(__file__) / Path("..") / Path("simple_example") / Path("results") / Path("example") / Path("idfs")
     idf_path = f"{base}/fid_2.idf"
     dest_path = f"{base}/fid_2.obj"
     idf = IDF(idf_path)
-    idf.to_obj(fname=dest_path) 
+    idf.to_obj(fname=dest_path)
     print(f"building 3D object has been saved to {dest_path}. ZIP the .obj an .mtl file and upload to www.creators3d.com/online-viewer to visualize.")

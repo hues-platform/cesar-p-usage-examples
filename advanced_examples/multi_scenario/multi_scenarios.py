@@ -75,25 +75,27 @@ def improve_electric_appliances_efficiency(bldg_model: BuildingModel):
 
 def improve_window_frame(bldg_model: BuildingModel):
     # exchanging construction for window frame
-    # it is best to assign a new instanc to each model to avoid shared instances accross buildings, 
-    # which would have unexpected behavior if you want to do changes to one building, because it would then apply to all due to the shared instance. 
-    ureg = pint.get_application_registry()  
+    # it is best to assign a new instanc to each model to avoid shared instances accross buildings,
+    # which would have unexpected behavior if you want to do changes to one building, because it would then apply to all due to the shared instance.
+    ureg = pint.get_application_registry()
     # actually I do not know if that frame is "imporved" compared to the definition in config of cesarp.construction
-    new_win_frame_constr = WindowFrameConstruction(name="custom_example_win_frame",
-                                                    short_name="custom_example_win_frame",
-                                                    frame_conductance = 7.5 * ureg("W/m**2/K"),
-                                                    frame_solar_absorptance = 0.4 * ureg("solar_absorptance"),
-                                                    frame_visible_absorptance = 0.4 * ureg("visible_absorptance"),
-                                                    outside_reveal_solar_absorptance = 0.4 * ureg("solar_absorptance"),
-                                                    emb_co2_emission_per_m2 = None,
-                                                    emb_non_ren_primary_energy_per_m2 = None)
+    new_win_frame_constr = WindowFrameConstruction(
+        name="custom_example_win_frame",
+        short_name="custom_example_win_frame",
+        frame_conductance=7.5 * ureg("W/m**2/K"),
+        frame_solar_absorptance=0.4 * ureg("solar_absorptance"),
+        frame_visible_absorptance=0.4 * ureg("visible_absorptance"),
+        outside_reveal_solar_absorptance=0.4 * ureg("solar_absorptance"),
+        emb_co2_emission_per_m2=None,
+        emb_non_ren_primary_energy_per_m2=None,
+    )
     bldg_model.bldg_construction.window_constr.frame = new_win_frame_constr
 
 
 def improvement_scenarios(fids_to_use=None):
     ureg = cesarp.common.init_unit_registry()
     # use the set/get unit registry approach as we do not get passed a unit reg instance in the modify methods above...
-    pint.set_application_registry(ureg)    
+    pint.set_application_registry(ureg)
     myProj = ProjectManager(__abs_path("../main_config.yml"), __abs_path("../results/scenario_comparison"), fids_to_use=fids_to_use, unit_reg=ureg)
 
     logging.info(f"trying to load scenario {MyScenarios.BASE}")

@@ -25,6 +25,7 @@ from shutil import copyfileobj
 
 
 from cesarp.construction import _default_config_file as cstr_cfg
+
 # emission_and_cost has no config
 from cesarp.energy_strategy import _default_config_file as es_cfg
 from cesarp.eplus_adapter import _default_config_file as eplus_cfg
@@ -64,6 +65,7 @@ ALL_CFG_FILES = [
     ret_emb_cfg,
     ret_ep2050_cfg,
 ]
+
 
 def combine_configs_without_comments():
     all_config_dict = {}

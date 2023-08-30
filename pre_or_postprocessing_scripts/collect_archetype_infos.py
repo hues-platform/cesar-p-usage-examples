@@ -45,7 +45,9 @@ from cesarp.graphdb_access.ArchetypicalConstructionGraphDBBased import Archetypi
 
 # %% initialize archetype factory and graph db access
 ureg = cesarp.common.init_unit_registry()
-db_facade = GraphDBFacade(ureg)  # pass here a custom config if you want remote db access - make sure graphdb access is set up according to installation notes in README of cesar-p-core
+
+# pass here a custom config if you want remote db access - make sure graphdb access is set up according to installation notes in README of cesar-p-core
+db_facade = GraphDBFacade(ureg)
 bldg_constr_reader = BldgElementConstructionReader(db_facade._graph_reader, ureg)
 years = list(range(1900, 2030))
 # the archetype factory interface works with a list of buildings, thus create such a list with fictive buildings
@@ -63,7 +65,7 @@ for ac, uri in archetype_fact._ageclass_archetype.items():
 per_archetype_infos = []
 for id, year in bldg_list.items():
     constr_archetype: ArchetypicalConstructionGraphDBBased = archetype_fact.get_archetype_for(id)
-    uri = "" #archetype_fact._get_archetype_uri_for(year) # can be activated when using cesar-p-core > 1.3.1
+    uri = ""  # archetype_fact._get_archetype_uri_for(year) # can be activated when using cesar-p-core > 1.3.1
     u_wall = bldg_constr_reader.get_u_value(constr_archetype.wall_constr.get_value(False))
     u_roof = bldg_constr_reader.get_u_value(constr_archetype.roof_constr.get_value(False))
     u_groundfloor = bldg_constr_reader.get_u_value(constr_archetype.groundfloor_constr.get_value(False))
@@ -72,7 +74,9 @@ for id, year in bldg_list.items():
     infiltration_rate = constr_archetype.get_infiltration_rate()
     per_archetype_infos.append([year, uri, glz_ratio, infiltration_rate, u_wall, u_roof, u_groundfloor, u_win])
 
-archetype_table = pd.DataFrame(data=per_archetype_infos, columns=["year_of_construction","archetyp_uri","glazing_ratio","infiltration_rate","u_wall","u_roof","u_groundfloor","u_windowglass"])
+archetype_table = pd.DataFrame(
+    data=per_archetype_infos, columns=["year_of_construction", "archetyp_uri", "glazing_ratio", "infiltration_rate", "u_wall", "u_roof", "u_groundfloor", "u_windowglass"]
+)
 archetype_table.set_index("year_of_construction", inplace=True)
 archetype_table.to_csv("construction_attributes.csv")
 
@@ -82,16 +86,16 @@ ax1 = fig.add_subplot(111)
 ax1.plot(list(archetype_table.index), archetype_table["glazing_ratio"], label="Glazing ratio [0...1]")
 ax1.plot(list(archetype_table.index), archetype_table["infiltration_rate"], label="Infiltration rate [ACH]")
 plt.grid(True)
-#ax1.scatter(x[40:],y[40:], s=10, c='r', marker="o", label='second')
+# ax1.scatter(x[40:],y[40:], s=10, c='r', marker="o", label='second')
 plt.ylabel("rate (% / ACH)", fontsize=20, labelpad=15)
 plt.xlabel("construction year", fontsize=20, labelpad=15)
-plt.ylim([0,1])
+plt.ylim([0, 1])
 plt.xlim([1900, 2030])
-plt.legend(loc='upper right', fontsize=20)
+plt.legend(loc="upper right", fontsize=20)
 plt.setp(ax1.get_xticklabels(), fontsize=16)
 plt.xticks(rotation=0)
 plt.setp(ax1.get_yticklabels(), fontsize=16)
-#plt.title("CESAR-P construction properties for different construction years")
+# plt.title("CESAR-P construction properties for different construction years")
 plt.savefig("glazing_ratio_infiltration.pdf")
 plt.show()
 
@@ -103,15 +107,15 @@ ax1.plot(list(archetype_table.index), [val.m for val in archetype_table["u_roof"
 ax1.plot(list(archetype_table.index), [val.m for val in archetype_table["u_groundfloor"]], label="U-Value groundfloor")
 ax1.plot(list(archetype_table.index), [val.m for val in archetype_table["u_windowglass"]], label="U-Value window glass")
 plt.grid(True)
-#ax1.scatter(x[40:],y[40:], s=10, c='r', marker="o", label='second')
+# ax1.scatter(x[40:],y[40:], s=10, c='r', marker="o", label='second')
 plt.ylabel("U-Value (W/Kelvin/m2)", fontsize=20, labelpad=15)
 plt.xlabel("construction year", fontsize=20, labelpad=15)
 plt.xlim([1900, 2030])
-plt.legend(loc='upper right', fontsize=20)
-plt.setp(ax1.get_xticklabels(), rotation='horizontal', fontsize=16)
+plt.legend(loc="upper right", fontsize=20)
+plt.setp(ax1.get_xticklabels(), rotation="horizontal", fontsize=16)
 plt.xticks(rotation=0)
 plt.setp(ax1.get_yticklabels(), fontsize=16)
-#plt.title("CESAR-P construction properties for different construction years")
+# plt.title("CESAR-P construction properties for different construction years")
 plt.savefig("u-values.pdf")
 plt.show()
 # %%

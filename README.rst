@@ -15,7 +15,7 @@ Project Info
 - Programming Language and Version: Python 3.8 
 - Dependencies (see also requirements.txt)
 
-  - cesar-p version 2.0.0
+  - cesar-p version 2.4.0
   - geomeppy (for 3D obj generation from idf files, needed for 3dview.py example)
 
 - Documentation: all included in this README and in the comments of the different example scripts

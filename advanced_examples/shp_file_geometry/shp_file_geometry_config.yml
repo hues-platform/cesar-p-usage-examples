@@ -1,0 +1,44 @@
+MANAGER:
+    # how many worker-threads shall be used, -1 means half of the available processors will be used (applicable when using one of the built-in main classes, e.g. SimulationManager, ProjectManager)
+    NR_OF_PARALLEL_WORKERS: 2
+    SITE_VERTICES_FILE:
+        PATH: "BuildingGeometry.shp"
+        SEPARATOR: ","
+        SHP_OPEN_POLYGON_OPTION: "SKIP"
+    BLDG_FID_FILE:
+        PATH: "BuildingInformation.csv"
+        SEPARATOR: ","
+    BLDG_AGE_FILE:
+        PATH: "BuildingInformation.csv"
+        SEPARATOR: ","
+    BLDG_TYPE_PER_BLDG_FILE:
+        PATH: "BuildingInformation.csv"
+        SEPARATOR: ","
+    GLAZING_RATIO_PER_BLDG_FILE:
+        ACTIVE: False
+        PATH: "BuildingInformation.csv"
+        SEPARATOR: ","
+    DO_CALC_OP_EMISSIONS_AND_COSTS: True
+    BLDG_INSTALLATION_FILE:
+        PATH: "BuildingInformation.csv"
+        SEPARATOR: ","
+    SINGLE_SITE:
+        ACTIVE: True
+        WEATHER_FILE: "../../example_project_files/Zurich_2015.epw"
+
+
+# You can add here custom configuration for the cesar-p packages. This will overwrite package default config.
+# For configuration options see the configuration overview cesar-p-config_overview.yaml in the root of cesar-p-core
+# or see Configuration overview in the Usage section of the documentation
+
+SITE:
+  SIMULATION_YEAR: 2015  # relevant for operational costs and emissions
+ENERGY_STRATEGY:
+  ENERGY_STRATEGY_SELECTION: WWB  # WWB - Business as Usual or NEP - New Energy Policy
+
+GRAPHDB_ACCESS:
+  LOCAL:
+    ACTIVE: True
+  REMOTE:  # if you activate remote graphdb access, make sure to configure it according to installation guide in the README
+    ACTIVE: False  
+    SPARQL_ENDPOINT: "YOUR_GRAPHDB_ENDPOINT"

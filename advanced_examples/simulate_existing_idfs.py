@@ -36,6 +36,7 @@ from cesarp.results.ResultProcessor import ResultProcessor
 def __abs_path(path):
     return cesarp.common.config_loader.abs_path(path, os.path.abspath(__file__))
 
+
 # folder with your pre-existing idf fildes. expected to be named fid_*.idf
 IDF_FOLDER = __abs_path(Path("results") / Path("basic_cesar_usage") / Path("idfs"))
 # weather file to be used for simulation of all idfs
@@ -43,20 +44,20 @@ WEATHER_FILE_PATH = __abs_path(Path("..") / Path("example_project_files") / Path
 # folder to store the results
 RESULT_FOLDER = __abs_path(Path("results") / Path("simulate_existing_idfs"))
 # specify path of a YML config in case you need to overwrite any configuration for eplus_adapter package
-CONFIG = None  
+CONFIG = None
 
 
 if __name__ == "__main__":
     custom_config = {}
     if CONFIG:
         custom_config = cesarp.common.config_loader.load_config_full(CONFIG)
-    
+
     # get idf files and run simulations
     idf_pathes = cesarp.common.filehandling.scan_directory(IDF_FOLDER, "fid_{}.idf")
     weather_files = {idx: WEATHER_FILE_PATH for idx in idf_pathes.keys()}
     result_folders = {idx: str(RESULT_FOLDER / Path("fid_{}".format(idx))) for idx in idf_pathes.keys()}
     cesarp.eplus_adapter.eplus_sim_runner.run_batch(idf_pathes, weather_files, result_folders, -1, custom_config)
-    
+
     # get simulation results
     ureg = cesarp.common.init_unit_registry()
     summary_res = {idx: eplus_eso_results_handling.collect_cesar_simulation_summary(res_folder, ureg) for idx, res_folder in result_folders.items()}

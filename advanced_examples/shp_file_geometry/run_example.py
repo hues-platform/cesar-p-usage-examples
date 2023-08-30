@@ -19,14 +19,15 @@
 # Contact: https://www.empa.ch/web/s313
 #
 """
-Example using a custom factory for building operation.
-For more details check out the description in the :py:class:`SIABasedMixedOperationFactory`
+Example showing how you can use a shp file for the geometry.
+
+NOTE: You need to have geopandas installed to use this example
 """
+
 import logging.config
 import logging
 import os
 import shutil
-import sys
 
 import cesarp.common
 import cesarp.common.config_loader
@@ -38,25 +39,16 @@ def __abs_path(path):
 
 
 if __name__ == "__main__":
-    # this logging config is only for the main process, workers log to separate log files which go into a folder, configured in SimulationManager.
     logging.config.fileConfig(__abs_path("../logging.conf"))
 
-    # make sure the SIABasedMixedOperationFactory can be found
-    sys.path.append(os.path.dirname(__file__))
-
-    main_cfg_path = __abs_path("../main_config.yml")
-    # the additional_op_params_config.yml points to our custom factory
-    op_param_cfg_path = __abs_path("additional_op_params_config.yml")
-    # you could also add this configuration lines to your main config, here we just did want to reuse the main_config
-    # and thus parse and merge those two custom configs before passing them to the Simulation manager
-    main_config = cesarp.common.config_loader.merge_config_recursive(cesarp.common.load_config_full(main_cfg_path), cesarp.common.load_config_full(op_param_cfg_path))
-    output_dir = __abs_path("../results/op_params_per_floor")
+    # the configuration points to the custom constructional archetype factory
+    main_config_path = __abs_path("shp_file_geometry_config.yml")
+    output_dir = __abs_path("../results/shp_file_geometry")
     shutil.rmtree(output_dir, ignore_errors=True)
 
-    fids_to_use = [1, 2, 3]  # set to None to simulate all buildings
-    sim_manager = SimulationManager(output_dir, main_config, cesarp.common.init_unit_registry(), fids_to_use=fids_to_use)
+    sim_manager = SimulationManager(output_dir, main_config_path, cesarp.common.init_unit_registry())
     sim_manager.run_all_steps()
 
     print("====================")
     print(f"check out results in {output_dir}")
-    print("for a quick check if profile assignment worked as expected, you could have a look at the generated IDF files.")
+    print("check archetype assignment in worker log files in folder TIMESTAMP-cesarp-logs. depending on logging settings it is also printed to the console.")

@@ -1,0 +1,10 @@
+BLDG_PAST_RETROFIT_PER_BLDG_FILE:
+    ACTIVE: true
+    PATH: "BuildingInformation_withRetrofits.csv"
+    SEPARATOR: ","
+    LABELS:
+        gis_fid: "ORIG_FID"
+        year_of_wall_retrofit: "WallRetrofit"
+        year_of_roof_retrofit: "RoofRetrofit"
+        year_of_groundfloor_retrofit: "GroundfloorRetrofit"
+        year_of_window_retrofit: "WindowRetrofit"

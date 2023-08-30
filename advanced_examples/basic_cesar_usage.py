@@ -64,10 +64,10 @@ from cesarp.manager.debug_methods import run_single_bldg
 def __abs_path(path: Union[str, Path]):
     """
     helper function
-    python evaluates any relative pathes relative to the location of script, module, class it is used in, 
+    python evaluates any relative pathes relative to the location of script, module, class it is used in,
     thus, always convert relative pathes after passing them to the main script
 
-    :param path: relative path to conevert (if it is already absolute path you pass it should be left unchanged) 
+    :param path: relative path to conevert (if it is already absolute path you pass it should be left unchanged)
     :type path: Union[str, Path]
     :return: absolute path
     :rtype: str
@@ -75,7 +75,7 @@ def __abs_path(path: Union[str, Path]):
     return cesarp.common.config_loader.abs_path(path, os.path.abspath(__file__))
 
 
-def run_sim_site(base_output_folder: Union[str, Path], main_config_path: Union[str, Path, Dict[str, Any]], fids: List[int] = None, delete_old_logs: bool=True):
+def run_sim_site(base_output_folder: Union[str, Path], main_config_path: Union[str, Path, Dict[str, Any]], fids: List[int] = None, delete_old_logs: bool = True):
     """
     Normal simulation run.
     Create a ZIP including all ressources used and results.
@@ -92,7 +92,9 @@ def run_sim_site(base_output_folder: Union[str, Path], main_config_path: Union[s
     """
     base_output_folder = __abs_path(base_output_folder)
     assert not os.path.exists(base_output_folder), f"output folder {base_output_folder} already exists - please specify a non-existing folder for cesar-p outputs."
-    sim_manager = SimulationManager(base_output_folder, main_config_path, cesarp.common.init_unit_registry(), fids_to_use=fids, load_from_disk=False, delete_old_logs=delete_old_logs)
+    sim_manager = SimulationManager(
+        base_output_folder, main_config_path, cesarp.common.init_unit_registry(), fids_to_use=fids, load_from_disk=False, delete_old_logs=delete_old_logs
+    )
 
     sim_manager.run_all_steps()
     zip_path = sim_manager.save_to_zip(main_script_path=__file__, save_folder_path=os.path.dirname(__file__), include_idfs=False, include_eplus_output=False, include_src_pck=True)
@@ -111,13 +113,13 @@ def run_sim_site(base_output_folder: Union[str, Path], main_config_path: Union[s
 
 def load_from_disk(base_output_folder: Union[str, Path], main_config_path: Union[str, Path, Dict[str, Any]]) -> None:
     """
-    Load existing project. 
-    If simulation results are available in the building containers the summary result file is re-created. 
-    But you could also re-load a project for which the simulation are not yet run to run them. 
+    Load existing project.
+    If simulation results are available in the building containers the summary result file is re-created.
+    But you could also re-load a project for which the simulation are not yet run to run them.
 
     :param base_output_folder: project folder, expecting the output structure according to cesar-p defaults or according to the configuration passed
     :type base_output_folder: Union[str, Path]
-    :param main_config_path: project config used, especially if you parameters overwritten for output folders and names it is important to pass it when re-loading. 
+    :param main_config_path: project config used, especially if you parameters overwritten for output folders and names it is important to pass it when re-loading.
                              you can either pass the full file path to the config YML file or a dictionary with configuration entries
     :type main_config_path: Union[str, Path, Dict[str, Any]]
     """
@@ -133,7 +135,7 @@ def load_from_disk(base_output_folder: Union[str, Path], main_config_path: Union
 
 def debug_sim_single_bldg(fid: int, output_path: Union[str, Path], main_config_path: Union[str, Path, Dict[str, Any]], weather_file_path: Union[str, Path]) -> None:
     """
-    Logging output and debugging is a bit doggy with multiprocessing. So it is helpful, if things go wrong, to run the pipeline just for one building without 
+    Logging output and debugging is a bit doggy with multiprocessing. So it is helpful, if things go wrong, to run the pipeline just for one building without
     the multiprocessing.
 
     :param fid: building fid to debug
@@ -159,11 +161,11 @@ def debug_sim_single_bldg(fid: int, output_path: Union[str, Path], main_config_p
 
 def run_specific_idf(idf_path: Union[str, Path], output_path: Union[str, Path], weather_file: Union[str, Path], main_config_path: Optional[Union[str, Path]] = None) -> None:
     """
-    Run EnergyPlus simulation for a specific IDF File within your project. 
+    Run EnergyPlus simulation for a specific IDF File within your project.
 
     :param idf_path: full path of idf to simulate
     :type idf_path: Union[str, Path]
-    :param output_path: full path to folder where to store energy plus outputs 
+    :param output_path: full path to folder where to store energy plus outputs
     :type output_path: Union[str, Path]
     :param weather_file: full path to weather file (epw) to use for the simulation
     :type weather_file: Union[str, Path]
@@ -222,32 +224,33 @@ def init_basic_logging_config(log_file):
 if __name__ == "__main__":
     # Set up logging
     # logging.config.fileConfig("logging.conf")  # this logging config is only for the main process, workers log to separate log files which go into a folder, configured in SimulationManager.
-    init_basic_logging_config("cesarp-log.log")    
-    
+    init_basic_logging_config("cesarp-log.log")
+
     # switch CLI / script mode
     if len(sys.argv) > 1:
         run_from_command_line_args()
     else:
+
         class Mode(Enum):
-            NORMAL_SIM="normal simulation run"
-            DEBUG_BLDG="debug a single building"
-            LOAD_EXISTING="load existing project from disk"
+            NORMAL_SIM = "normal simulation run"
+            DEBUG_BLDG = "debug a single building"
+            LOAD_EXISTING = "load existing project from disk"
 
         # === FOR NON-CLI RUN: DEFINE HERE YOUR PROJECT SETTINGS - note that not all settings are used in all modes
-        
+
         RUNNING_MODE = Mode.NORMAL_SIM
-        
-        MAIN_CONFIG_PATH = __abs_path("main_config.yml")        
+
+        MAIN_CONFIG_PATH = __abs_path("main_config.yml")
         OUTPUT_DIR = "./results/basic_cesar_usage"
 
         # applicable to mode NORMAL_SIM only
-        FIDS_TO_USE = range(1,3)  # set to None to use all buildings; 
+        FIDS_TO_USE = range(1, 3)  # set to None to use all buildings;
         DELETE_OLD_RESULTS = True
         DELETE_OLD_LOGS = True
-        
+
         # applicable to mode DEBUG_BLDG only
         DEBUG_BLDG_FID = 6
-        
+
         # === END USER INPUTS
 
         logging.info(f"Using main config file {MAIN_CONFIG_PATH} and output folder {OUTPUT_DIR}.")

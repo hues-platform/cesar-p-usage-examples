@@ -1,0 +1,29 @@
+MANAGER:
+    NR_OF_PARALLEL_WORKERS: -1  # -1 means half of the available processors will be used
+    SITE_VERTICES_FILE:
+        PATH: "../../example_project_files/SiteVertices.csv"
+        SEPARATOR: ","
+    BLDG_FID_FILE:
+        PATH: "BuildingInformation_withRetrofits.csv"
+        SEPARATOR: ","
+    BLDG_AGE_FILE:
+        PATH: "BuildingInformation_withRetrofits.csv"
+        SEPARATOR: ","
+    BLDG_TYPE_PER_BLDG_FILE:
+        PATH: "BuildingInformation_withRetrofits.csv"
+        SEPARATOR: ","
+    GLAZING_RATIO_PER_BLDG_FILE:
+        ACTIVE: False
+        PATH: "BuildingInformation_withRetrofits.csv"
+        SEPARATOR: ","
+    DO_CALC_OP_EMISSIONS_AND_COSTS: False
+    SINGLE_SITE:
+        ACTIVE: True
+        WEATHER_FILE: "../../example_project_files/Zurich_2015.epw"
+
+GRAPHDB_ACCESS:
+    ARCHETYPE_CONSTRUCTION_FACTORY_CLASS: GraphDBCustomArchetypicalConstructionFactory.GraphDBCustomArchetypicalConstructionFactory
+    LOCAL:  # use a TTL file as data source
+        ACTIVE: True 
+        PATH: "construction_and_material_data.ttl"
+        FORMAT: "ttl"

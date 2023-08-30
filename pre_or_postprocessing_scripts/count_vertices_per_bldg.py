@@ -36,6 +36,7 @@ import cesarp.common
 def __abs_path(path):
     return cesarp.common.config_loader.abs_path(path, os.path.abspath(__file__))
 
+
 SITE_VERTICES_PATH = os.path.dirname(__file__) / Path("..") / Path("example_project_files") / Path("SiteVertices.csv")
 LABEL_MAPPING = {"gis_fid": "TARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"}  # labels in your SiteVertices.csv
 NR_ENTRIES_TO_PRINT = 30  # just how many buildings shall be shown (building are sorted by number of vertices)

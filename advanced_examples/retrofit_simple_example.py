@@ -38,6 +38,7 @@ from cesarp.model.BuildingElement import BuildingElement
 import cesarp.common
 from cesarp.retrofit.RetrofitLog import LOG_KEYS
 
+
 def __abs_path(rel_path):
     return cesarp.common.config_loader.abs_path(rel_path, os.path.abspath(__file__))
 
@@ -55,5 +56,5 @@ if __name__ == "__main__":
     logging.info(f"roof retrofit case:\n{roof_ret_sum_costs_emissions}")
     logging.info(f"wall and windows retrofit case:\n{wall_win_groundf_ret_sum_costs_emissions}")
     retfit_mgr.run_simulations()
-    
+
     exit(0)

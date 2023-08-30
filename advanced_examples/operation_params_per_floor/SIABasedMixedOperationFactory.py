@@ -51,7 +51,7 @@ class SIABasedMixedOperationFactory:
         :param custom_config: custom configuration entries, defaults to {}
         :type custom_config: Dict[str, Any], optional
         """
-        # we use the pre-generated sia profiles included in cesar-p-core, thus no need to link create new parameter sets 
+        # we use the pre-generated sia profiles included in cesar-p-core, thus no need to link create new parameter sets
         # (SIA data which would be needed for this is not included in cesar-p-core open source package)
         params_factory = NullParameterFactory()
         self.params_manager = SIA2024ParamsManager(params_factory, ureg, custom_config)

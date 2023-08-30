@@ -19,8 +19,9 @@
 # Contact: https://www.empa.ch/web/s313
 #
 """
-Example using a custom factory for building operation.
-For more details check out the description in the :py:class:`SIABasedMixedOperationFactory`
+Example using a custom IDF Writer
+
+NOTE: THIS EXAMPLE ONLY WORKS WITH THE BRANCH feature/config_idf_write OF THE CESARP-CORE PROJECT
 """
 import logging.config
 import logging
@@ -35,9 +36,10 @@ from cesarp.manager.debug_methods import run_single_bldg
 from pathlib import Path
 from typing import Union, Dict, Any
 
+
 def debug_sim_single_bldg(fid: int, output_path: Union[str, Path], main_config_path: Union[str, Path, Dict[str, Any]], weather_file_path: Union[str, Path]) -> None:
     """
-    Logging output and debugging is a bit doggy with multiprocessing. So it is helpful, if things go wrong, to run the pipeline just for one building without 
+    Logging output and debugging is a bit doggy with multiprocessing. So it is helpful, if things go wrong, to run the pipeline just for one building without
     the multiprocessing.
 
     :param fid: building fid to debug
@@ -65,6 +67,8 @@ def __abs_path(path):
 
 
 if __name__ == "__main__":
+    # NOTE: THIS EXAMPLE ONLY WORKS WITH THE BRANCH feature/config_idf_write OF THE CESARP-CORE PROJECT
+
     # this logging config is only for the main process, workers log to separate log files which go into a folder, configured in SimulationManager.
     logging.config.fileConfig(__abs_path("../logging.conf"))
 
@@ -72,10 +76,10 @@ if __name__ == "__main__":
     sys.path.append(os.path.dirname(__file__))
 
     main_cfg_path = __abs_path("../main_config.yml")
-    # the idf_writer_config.yml points to our custom factory    
-    idf_writer_cfg_path = __abs_path("custom_idf_writer_config.yml") 
-    # you could also add this configuration lines to your main config, here we just did want to reuse the main_config 
-    # and thus parse and merge those two custom configs before passing them to the Simulation manager     
+    # the idf_writer_config.yml points to our custom factory
+    idf_writer_cfg_path = __abs_path("custom_idf_writer_config.yml")
+    # you could also add this configuration lines to your main config, here we just did want to reuse the main_config
+    # and thus parse and merge those two custom configs before passing them to the Simulation manager
     main_config = cesarp.common.config_loader.merge_config_recursive(cesarp.common.load_config_full(main_cfg_path), cesarp.common.load_config_full(idf_writer_cfg_path))
     output_dir = __abs_path("../results/custom_idf_writer")
     shutil.rmtree(output_dir, ignore_errors=True)
@@ -83,7 +87,7 @@ if __name__ == "__main__":
     # for runing a test on a single building, uncomment the following two lines:
     # debug_sim_single_bldg(1, output_dir, main_config, single_site_weather)
     # exit()
-    fids_to_use = None # set to None to simulate all buildings or use [1]
+    fids_to_use = None  # set to None to simulate all buildings or use [1]
     sim_manager = SimulationManager(output_dir, main_config, cesarp.common.init_unit_registry(), fids_to_use=fids_to_use)
     try:
         sim_manager.create_bldg_models()
